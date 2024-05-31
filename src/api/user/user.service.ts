@@ -58,11 +58,27 @@ export class UserService {
     return { message: 'Profile Updated successfully ' };
   }
 
-  async getUserById(id: string): Promise<User> {
+  async getUserById(id: string, userPayload: UserPayload): Promise<User> {
     const user = await this.userModel.findById(id).select('-password');
     if (!user) {
       throw new NotFoundException('User not found');
     }
+
+    if (userPayload.role === UserType.User) {
+      const isUserAddedByUserOrUserHimself =
+        user.addedBy === userPayload.userId || user.id === userPayload.userId;
+
+      if (!isUserAddedByUserOrUserHimself)
+        throw new NotFoundException('User not found');
+    }
+
     return user;
+  }
+
+  getAllUsers(id: string) {
+    return this.userModel
+      .find()
+      .or([{ _id: id }, { addedBy: id }])
+      .select('-password');
   }
 }

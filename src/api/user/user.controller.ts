@@ -1,8 +1,7 @@
-import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Role } from 'src/decorators/role.decorator';
 import { UserType } from 'src/models/user.model';
-import { Public } from '../../decorators/auth.decorator';
 import { User } from '../../decorators/user.decorator';
 import { UserPayload } from '../../types/UserPayload.type';
 import { CreateUserDto, UpdateUserDto } from './dto/user.dto';
@@ -36,8 +35,8 @@ export class UserController {
 
   @Get('getUser/:id')
   @ApiResponse({ status: 200, description: 'User retrieved successfully' })
-  getUserById(@Param('id') id: string) {
-    return this.userService.getUserById(id);
+  getUserById(@Param('id') id: string, @User() user:UserPayload) {
+    return this.userService.getUserById(id, user);
   }
 
   @Patch('updateMyProfile')
@@ -48,4 +47,11 @@ export class UserController {
   ) {
     return this.userService.updateUser(user.userId, updateUserProfileDto);
   }
+
+  @Get('getAllUsers')
+  @ApiResponse({ status: 200, description: 'User retrieved successfully' })
+  getAllUsers(@User() user: UserPayload) {
+    return this.userService.getAllUsers(user.userId);
+  }
+
 }
