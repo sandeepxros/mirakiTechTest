@@ -51,17 +51,27 @@ export class CreateUserDto {
 
 export class UpdateUserDto {
   @ApiProperty({ description: 'First name of the user' })
+  @IsString()
+  @IsOptional()
   firstName?: string;
 
   @ApiProperty({ description: 'Middle name of the user' })
+  @IsString()
+  @IsOptional()
   middleName?: string;
 
   @ApiProperty({ description: 'Last name of the user' })
+  @IsString()
+  @IsOptional()
   lastName?: string;
 
   @ApiProperty({ description: 'Email of the user' })
+  @IsEmail()
+  @IsOptional()
   email?: string;
 
   @ApiProperty({ description: 'Department of the user' })
+  @IsString()
+  @IsOptional()
   department?: string;
 }

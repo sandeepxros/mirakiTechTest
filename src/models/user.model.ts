@@ -46,6 +46,10 @@ export class User {
   @ApiProperty({ description: 'Department of the user' })
   @Prop()
   department: string;
+
+  @ApiProperty({ description: 'added by user' })
+  @Prop()
+  addedBy: string;
 }
 
 const UserSchema = SchemaFactory.createForClass(User);
