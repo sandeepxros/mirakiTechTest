@@ -33,7 +33,6 @@ export class AuthService {
   }
 
    whoAmI(user: UserPayload) {
-    console.log(user, "asddf")
     return this.userModel.findOne({ _id: user.userId }).select('-password');
   }
 

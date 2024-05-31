@@ -16,7 +16,6 @@ export class UserService {
   ) {}
 
   async createUser(createUserDto: CreateUserDto, user: UserPayload) {
-    console.log(user, 'saf');
     if (user?.role === UserType.User && createUserDto.role === UserType.Admin)
       throw new BadRequestException('You cant create an admin ');
 
