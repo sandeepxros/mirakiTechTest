@@ -14,9 +14,9 @@ export class UserTypesGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     let req = context.switchToHttp().getRequest();
 
-    if (!this.userTypes.includes(req.user?.userType)) {
+    if (!this.userTypes.includes(req.user?.role)) {
       throw new UnauthorizedException(
-        `Not Accessible by ${req.user?.userType}`,
+        `Not Accessible by ${req.user?.role}`,
       );
     }
 
